@@ -100,32 +100,7 @@ public class OrderServiceImp implements OrderService {
         return mapper.map(savedOrder, OrderDto.class);
 //        --------------------------------------------------------------------------
 
-//        //OrderItem,amount
-//        AtomicReference<Integer> orderAmount = new AtomicReference<>(0);
-//        List<OrderItem> orderItems = cartItems.stream().map(cartItem -> {
-//
-//           // Convert  CartItem->OrderItem
-//            OrderItem orderItem = OrderItem
-//                    .builder()
-//                    .quantity(cartItem.getQuantity())
-//                    .product(cartItem.getProduct())
-//                    .totalPrice(cartItem.getQuantity() * cartItem.getProduct().getDiscountedPrice())
-//                    .order(order)
-//                    .build();
-//
-//
-//            return orderItem;
-//
-//        }).collect(Collectors.toList());
-//
-//        order.setOrderItems(orderItems);
-//        order.setOrderAmount(orderAmount.get());
-//
-//        // Cart clear
-//        cart.getItems().clear();
-//        cartRepository.save(cart);
-//        Order saveorder = orderRepository.save(order);
-//        return mapper.map(saveorder,OrderDto.class);
+ 
     }
 
     @Override
