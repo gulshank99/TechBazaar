@@ -127,4 +127,13 @@ public class UserController {
 
     }
 
+    // TODO:Implement PatchMapping
+
+//    @PatchMapping("/{userId}")
+//    public ResponseEntity<UserDto> partialUpdate(@PathVariable ("userId")String userId,@Valid @RequestBody UserDto userDto) {
+//        UserDto user = userService.updateUser(userDto, userId);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//
+//    }
+
 }

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private ModelMapper mapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Value("${user.profile.image.path}")
     private String imagePath;
@@ -45,6 +48,9 @@ public class UserServiceImpl implements UserService {
 
         String userId = UUID.randomUUID().toString();
         userDto.setUserId(userId);
+
+        //encoding password
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         // If we use userRepository.save(userDto) here it is asking for Entity i.e uder but we are
         // giving dto so we have to convert dto->entity and then entity->dto

@@ -1,6 +1,5 @@
 package com.gsa.tech.bazaar.services.impl;
 
-import com.gsa.tech.bazaar.dtos.CategoryDto;
 import com.gsa.tech.bazaar.dtos.PageableResponse;
 import com.gsa.tech.bazaar.dtos.ProductDto;
 import com.gsa.tech.bazaar.entities.Category;
@@ -25,7 +24,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
-import java.util.List;
+
 import java.util.UUID;
 
 @Service
@@ -49,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto create(ProductDto productDto) {
         Product product = mapper.map(productDto, Product.class);
 
-        //Product Id
+        //Product I'd
         String productId = UUID.randomUUID().toString();
         product.setProductId(productId);
 
