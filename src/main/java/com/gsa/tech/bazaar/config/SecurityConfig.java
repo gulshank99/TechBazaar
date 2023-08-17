@@ -10,6 +10,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
@@ -22,6 +24,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableMethodSecurity                // This is to give permission to user
 public class SecurityConfig {
 
     @Autowired
@@ -86,6 +89,8 @@ public class SecurityConfig {
                 .cors().disable()
                 .authorizeRequests()
                 .requestMatchers("/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST,"/users").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/users/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()

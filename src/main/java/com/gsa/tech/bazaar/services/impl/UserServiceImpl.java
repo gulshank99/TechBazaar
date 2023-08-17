@@ -3,9 +3,11 @@ package com.gsa.tech.bazaar.services.impl;
 import com.gsa.tech.bazaar.controller.UserController;
 import com.gsa.tech.bazaar.dtos.PageableResponse;
 import com.gsa.tech.bazaar.dtos.UserDto;
+import com.gsa.tech.bazaar.entities.Role;
 import com.gsa.tech.bazaar.entities.User;
 import com.gsa.tech.bazaar.exceptions.ResourceNotFoundEception;
 import com.gsa.tech.bazaar.helper.Helper;
+import com.gsa.tech.bazaar.repositories.RoleRepository;
 import com.gsa.tech.bazaar.repositories.UserRepository;
 import com.gsa.tech.bazaar.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -41,6 +43,12 @@ public class UserServiceImpl implements UserService {
     @Value("${user.profile.image.path}")
     private String imagePath;
 
+    @Value("${normal.role.id}")
+    private String normalRoleId;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
@@ -60,8 +68,12 @@ public class UserServiceImpl implements UserService {
         //  UserDto newDto =  mapper.map(savedUser,UserDto.class);
 
         User user = dtoToEntity(userDto);
-        User savedUser = userRepository.save(user);
 
+        //Fetch role of normal user
+        Role role = roleRepository.findById(normalRoleId).get();
+        user.getRoles().add(role);
+
+        User savedUser = userRepository.save(user);
         UserDto newDto = entityToDto(savedUser);
         return newDto;
     }

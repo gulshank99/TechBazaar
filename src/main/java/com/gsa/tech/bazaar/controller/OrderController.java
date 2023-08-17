@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,12 +24,14 @@ public class OrderController {
     private OrderService orderService;
 
     //create
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@Valid @RequestBody CreateOrderRequest request) {
         OrderDto order = orderService.createOrder(request);
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{orderId}")
     public ResponseEntity<ApiResponseMessage> removeOrder(@PathVariable String orderId) {
         orderService.removeOrder(orderId);
