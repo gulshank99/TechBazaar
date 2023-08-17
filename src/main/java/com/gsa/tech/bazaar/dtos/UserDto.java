@@ -1,5 +1,6 @@
 package com.gsa.tech.bazaar.dtos;
 
+import com.gsa.tech.bazaar.entities.Role;
 import com.gsa.tech.bazaar.validate.ImageNameValid;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +11,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -38,6 +42,9 @@ public class UserDto {
 
         @ImageNameValid()
         private String imageName;
+
+        private Set<RoleDto> roles = new HashSet<>();
+
 
         //@Pattern
         //@Custom Validator

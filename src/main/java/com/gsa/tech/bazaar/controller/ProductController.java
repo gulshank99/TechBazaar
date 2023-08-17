@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,11 +33,13 @@ public class ProductController {
 
     //Create
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto){
         ProductDto createProduct = productService.create(productDto);
         return new ResponseEntity<>(createProduct, HttpStatus.CREATED);
     }
     //Update
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{productId}")
     public ResponseEntity<ProductDto> update(@PathVariable String productId,@RequestBody ProductDto productDto){
         ProductDto updateProduct = productService.update(productDto,productId);
@@ -44,6 +47,7 @@ public class ProductController {
     }
 
     //Delete
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{productId}")
     public ResponseEntity<ApiResponseMessage> delete(@PathVariable String productId){
        productService.delete(productId);
@@ -99,6 +103,7 @@ public class ProductController {
     }
 
     // Upload user Image
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/image/{productId}")
     public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("productImage") MultipartFile image , @PathVariable("productId") String productId ) throws IOException {
         String productImageName = fileService.uploadFile(image, imageUploadPath);
@@ -123,9 +128,6 @@ public class ProductController {
         StreamUtils.copy(resource,response.getOutputStream());
 
     }
-
-
-
 
 
 }
