@@ -19,13 +19,13 @@ public class CartController {
 
 
     //Add items to cart
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{userId}")
     public ResponseEntity<CartDto> addItemToCart(@PathVariable String userId, @RequestBody AddItemToCartRequest request){
         CartDto cartDto = cartService.addItemToCart(userId, request);
         return new ResponseEntity<>(cartDto, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userId}/items/{itemId}")
     public ResponseEntity<ApiResponseMessage> removeItemFromCart(@PathVariable String userId,@PathVariable int itemId ){
       cartService.removeItemFromCart(userId,itemId);
@@ -37,7 +37,7 @@ public class CartController {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponseMessage> clearCart(@PathVariable String userId){
         cartService.clearCart(userId);
