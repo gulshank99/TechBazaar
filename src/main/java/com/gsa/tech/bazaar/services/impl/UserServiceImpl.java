@@ -84,7 +84,11 @@ public class UserServiceImpl implements UserService {
 
         user.setName(userDto.getName());
         user.setAbout(userDto.getAbout());
-        user.setPassword(userDto.getPassword());
+
+        if(!userDto.getPassword().equalsIgnoreCase(user.getPassword()) ) {
+            user.setPassword(userDto.getPassword());
+        }
+
         user.setImageName(userDto.getImageName());
         user.setGender(userDto.getGender());
 
